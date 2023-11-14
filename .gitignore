@@ -1,0 +1,61 @@
+###
+ # GitIgnore file.
+ # Prevents git from commiting any unwanted files.
+ ##
+
+
+# Do not track system files.
+.DS_Store
+Thumbs.db
+dump.rdb
+
+# Do not track environment settings.
+.env/
+.idea/
+.venv/
+.vs/
+.vscode/
+env/
+idea/
+venv/
+vs/
+vscode/
+workspace/local_env/
+env.py
+*env.py
+
+
+# Do not track python cache files.
+*.pyc
+
+
+# Do not track temporary files.
+[Tt]mp/
+[Tt]emp/
+[Tt]empfiles/
+[Tt]emp_files/
+*.tmp
+*.temp
+
+
+# Do not track logfiles.
+[Ll]og/
+[Ll]ogs/
+*.log
+*.log.*
+
+
+# Do not track development-related Django files.
+DEBUG
+*.sqlite3
+
+
+# Do not track compiled CSS/JS files.
+dist/
+node_modules/
+*.sass-cache/
+*.css
+*.css.map
+package-lock.json
+
+
