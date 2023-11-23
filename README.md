@@ -25,7 +25,7 @@ ScholarSeek, developed using Django and PyTerrier, is a academic search engine. 
 
  - Run proper migrations `python manage.py makemigrations` and `python manage.py migrate`
 
- - Install [arXiv Dataset](https://drive.google.com/file/d/1C1fR6i5mQ6vlv11lK-W2KD-F01IXBmpd/view?usp=sharing) into your local /scholarseek folder -> Your "search" folder and "manage.py" would also be in here.
+ - Install [arXiv Dataset](https://drive.google.com/u/4/uc?id=1C1fR6i5mQ6vlv11lK-W2KD-F01IXBmpd&export=download&confirm=t&uuid=0f6cc5e0-1ca6-497a-97c1-f2bda9eb354f&at=AB6BwCCjt38kOdTrdR2rCb-HPI_-:1700705273235) into your local /scholarseek folder -> Your "search" folder and "manage.py" would also be in here.
    
  - Load data into your SQLite Database `python manage.py loaddata arxiv_fixture.json --verbosity 2` Note: Due to the huge amount of data, this may take some time to install
 
