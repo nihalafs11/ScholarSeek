@@ -1,0 +1,15 @@
+{% block content %}
+    <h2>Search Results</h2>
+    {% if results %}
+        <ul>
+            {% for paper in results %}
+                <li>
+                    <a href="https://arxiv.org/pdf/{{ paper.id }}.pdf">{{ paper.title }}</a>
+                    - {{ paper.authors }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}

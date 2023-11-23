@@ -6,3 +6,4 @@ document.getElementById('optionsButton').addEventListener('click', function() {
         options.style.display = 'none';
     }
 });
+
