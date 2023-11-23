@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>ScholarSeek</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="main-container">
+        <div class="logo-container">
+            <a href="{% url 'index' %}">
+                <img src="{% static 'res/logo.png' %}" alt="ScholarSeek Logo">
+            </a>
+            <div id="text-logo">ScholarSeek</div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchQuery" placeholder="Search academic papers...">
+        
+            <div class="button-container">
+                <button id="searchButton">Search</button>
+                <button id="optionsButton">Search Options</button>
+            </div>
+        
+            <!-- Popup for Search Options -->
+            <div id="optionsPopup" class="options-popup" style="display:none;">
+                <!-- Include checkboxes here -->
+                <input type="checkbox" id="author" name="author">
+                <label for="author">Author</label><br>
+                <input type="checkbox" id="stemming" name="stemming">
+                <label for="stemming">Stemming</label><br>
+                <input type="checkbox" id="stopwordRemoval" name="stopwordRemoval">
+                <label for="stopwordRemoval">Stopword Removal</label><br>
+                <!-- Close Button -->
+                <button onclick="togglePopup()">Close</button>
+            </div>
+        </div>        
+    </div>
+    <script src="{% static 'js/popup.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
+    <script src="{% static 'js/fireflies.js' %}"></script>
+</body>
+</html>

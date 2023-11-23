@@ -1,4 +1,4 @@
-<p align="center"><img src="./res/logo.png"></p>
+<p align="center"><img src="./scholarseek/search/static/res/logo.png"></p>
 
 <p align="center">
     <img src="https://img.shields.io/badge/development-stage-red?style=for-the-badge">
@@ -22,6 +22,10 @@ ScholarSeek, developed using Django and PyTerrier, is a academic search engine. 
  - Source and activate your python virtual environment `source env/bin/activate`
 
  - Install the necessary packages by running the following command: `pip3 install -r "requirements.txt"`
+
+ - Run proper migrations `python manage.py makemigrations` and `python manage.py migrate`
+
+ - Install arXiv Dataset into your local SQLite Database `python manage.py loaddata arxiv_fixture.json --verbosity 2` Note: Due to the huge amount of data, this may take some time to install
 
  - Run Django in debug mode with: `python manage.py runserver`
 
