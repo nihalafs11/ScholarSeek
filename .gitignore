@@ -50,12 +50,6 @@ DEBUG
 *.sqlite3
 
 
-# Do not track compiled CSS/JS files.
-dist/
-node_modules/
-*.sass-cache/
-*.css
-*.css.map
-package-lock.json
-
-
+# Do not track big files
+index/
+arxiv-metadata-oai-snapshot.json

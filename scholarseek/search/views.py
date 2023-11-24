@@ -1,20 +1,27 @@
+import pyterrier as pt
 from django.shortcuts import render
-from django.db.models import Q
-from .models import arXiv
+
+if not pt.started():
+    pt.init()
 
 def index(request):
     return render(request, 'index.html')
 
 def search_by_criteria(request):
     search_query = request.GET.get('searchQuery', '')
-    search_type = request.GET.get('searchType', 'none')
-
-    if search_type == 'author':
-        results = arXiv.objects.filter(authors__icontains=search_query)
-    elif search_type == 'title':
-        results = arXiv.objects.filter(title__icontains=search_query)
-    else:
-        # Handle 'none' or default case
-        results = arXiv.objects.filter(Q(title__icontains=search_query) | Q(authors__icontains=search_query))
+    
+    index_path = "./index" 
+    indexref = pt.IndexRef.of(index_path + "/data.properties")
+    br = pt.BatchRetrieve(indexref, wmodel="BM25", metadata=["docno", "title", "authors", "text"])
+    
+    terrier_results = br.search(search_query)
+    
+    results = [{
+        'docno': row.docno,
+        'title': row.title or 'No Title',
+        'authors': row.authors or 'Unknown Authors',
+        'text': row.text or 'No Abstract',
+        'score': row.score
+    } for row in terrier_results.itertuples()]
 
     return render(request, 'search_results.html', {'results': results})

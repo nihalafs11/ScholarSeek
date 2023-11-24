@@ -4,8 +4,19 @@
         <ul>
             {% for paper in results %}
                 <li>
-                    <a href="https://arxiv.org/pdf/{{ paper.id }}.pdf">{{ paper.title }}</a>
-                    - {{ paper.authors }}
+                    <div>
+                        <strong>Title:</strong> 
+                        <a href="https://arxiv.org/pdf/{{ paper.docno }}.pdf">{{ paper.title }}</a>
+                    </div>
+                    <div>
+                        <strong>Authors:</strong> {{ paper.authors }}
+                    </div>
+                    <div>
+                        <strong>Abstract:</strong> {{ paper.text }}
+                    </div>
+                    <div>
+                        <strong>Score:</strong> {{ paper.score }}
+                    </div>
                 </li>
             {% endfor %}
         </ul>
