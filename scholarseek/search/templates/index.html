@@ -20,7 +20,7 @@
         <div class="search-container">
             <!-- Wrap the search components in a form -->
             <form action="{% url 'search_by_criteria' %}" method="get">
-                <input type="text" id="searchQuery" name="searchQuery" placeholder="Search academic papers...">
+                <input type="text" id="searchQuery" name="searchQuery" placeholder="Search academic papers..." autocomplete="off">
             
                 <div class="button-container">
                     <button type="submit" id="searchButton">Search</button>
@@ -28,8 +28,6 @@
             </form>
         </div>        
     </div>
-    <script src="{% static 'js/popup.js' %}"></script>
-    <script src="{% static 'js/search.js' %}"></script>
     <script src="{% static 'js/fireflies.js' %}"></script>
 </body>
 </html>
