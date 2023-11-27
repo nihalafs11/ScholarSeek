@@ -115,8 +115,16 @@ if __name__ == "__main__":
     ]
 
     ev = Evaluator(ir_systems)
-    results = ev.runExperiment(wmodel=["BM25", "TF_IDF", "Tf"])
-    results.insert(0, "detail", ["control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc",
-                                 "control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc",
-                                 "control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc"])
-    print(results)
+
+    bm25_result = ev.runExperiment(wmodel=["BM25"])
+    bm25_result.insert(0, "detail", ["control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc"])
+
+    tfidf_result = ev.runExperiment(wmodel=["TF_IDF"])
+    tfidf_result.insert(0, "detail", ["control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc"])
+
+    tf_result = ev.runExperiment(wmodel=["Tf"])
+    tf_result.insert(0, "detail", ["control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc"])
+
+    print(bm25_result)
+    print(tfidf_result)
+    print(tf_result)
