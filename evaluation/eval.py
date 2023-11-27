@@ -57,7 +57,17 @@ class Evaluator:
             pipelines,
             self.dataset.get_topics(),
             self.dataset.get_qrels(),
-            eval_metrics=["num_rel_ret", "P_50", "map", "recip_rank", "ndcg_cut_50", "recall_50", "mrt"]
+            eval_metrics=["num_rel_ret",
+                          "mrt",
+                          "recall_5",
+                          "recall_10",
+                          "recall_15",
+                          "P_5",
+                          "P_10",
+                          "P_15",
+                          "map",
+                          "recip_rank",
+                          "ndcg"]
         )
 
         return results
@@ -82,12 +92,12 @@ class EnvironmentHandler:
     def SetJavaHome(dir):
         if (os.path.exists(dir)):
             os.environ["JAVA_HOME"] = dir
-        else:
-            print("Directory not found")
+        elif (dir == "1"):
+            os.environ["JAVA_HOME"] = "C:\Program Files\Java\jdk-21"
 
 
 if __name__ == "__main__":
-    EnvironmentHandler.SetJavaHome(input("Enter Java directory: "))
+    EnvironmentHandler.SetJavaHome(input("Enter Java directory or leave empty for MacOS\n1: C:\Program Files\Java\jdk-21\nInput: "))
 
     if not pt.started():
         pt.init()
@@ -106,4 +116,7 @@ if __name__ == "__main__":
 
     ev = Evaluator(ir_systems)
     results = ev.runExperiment(wmodel=["BM25", "TF_IDF", "Tf"])
+    results.insert(0, "detail", ["control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc",
+                                 "control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc",
+                                 "control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc"])
     print(results)
