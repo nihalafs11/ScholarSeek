@@ -3,27 +3,26 @@ import os
 import threading
 
 
-def createPath(name):
-    base_path = os.getcwd() + "./evaluation/indices/"
-    dataset = "/clinicaltrials_2019"
-    return base_path + name + dataset
-
-
 class InformationRetriever:
-    def __init__(self, index_dir, stemmer, stopwords, tokeniser):
-        self.index_ref = None
+    def __init__(self, name, stemmer, stopwords, tokeniser, dataset):
+        self.name = name
         self.stemmer = stemmer
         self.stopwords = stopwords
         self.tokeniser = tokeniser
-        self.index_dir = index_dir
+        self.dataset = dataset
 
-        self.dataset = None
+        self.index_ref = None
+        self.index_dir = self.createPath()
+
+    def createPath(self):
+        base_path = os.getcwd() + "./evaluation/indices/"
+        return base_path + self.name
 
     def buildIndex(self):
-        self.dataset = pt.get_dataset('irds:clinicaltrials/2019/trec-pm-2019')
+        self.dataset = pt.get_dataset('irds:vaswani')
         if (os.path.exists(self.index_dir + "/data.properties") is False):
             indexer = pt.IterDictIndexer(self.index_dir, stemmer=self.stemmer, stopwords=self.stopwords, tokeniser=self.tokeniser)
-            self.index_ref = indexer.index(self.dataset.get_corpus_iter(), fields=['title', 'condition', 'summary', 'detailed_description', 'eligibility'])
+            self.index_ref = indexer.index(self.dataset.get_corpus_iter(), fields=['text'])
         else:
             self.index_ref = pt.IndexRef.of(self.index_dir + "/data.properties")
 
@@ -57,7 +56,7 @@ class Evaluator:
 
         results = pt.Experiment(
             pipelines,
-            self.dataset.get_topics("disease"),
+            self.dataset.get_topics(),
             self.dataset.get_qrels(),
             eval_metrics=["num_rel_ret", "P_50", "map", "recip_rank", "ndcg_cut_50", "recall_50", "mrt"]
         )
@@ -66,21 +65,21 @@ class Evaluator:
 
 
 if __name__ == "__main__":
-    os.environ["JAVA_HOME"] = "C:/Users/Edrick/Documents/jdk-21.0.1"
+    os.environ["JAVA_HOME"] = "C:\Program Files\Java\jdk-21"
 
     if not pt.started():
         pt.init()
         pt.ApplicationSetup.setProperty("max.term.length", "500")
 
     ir_systems = [
-        InformationRetriever(createPath("control"), stemmer="porter", stopwords="terrier", tokeniser="english"),
-        InformationRetriever(createPath("ir1"), stemmer="none", stopwords="terrier", tokeniser="english"),
-        InformationRetriever(createPath("ir2"), stemmer="porter", stopwords="none", tokeniser="english"),
-        InformationRetriever(createPath("ir3"), stemmer="porter", stopwords="terrier", tokeniser="whitespace"),
-        InformationRetriever(createPath("ir4"), stemmer="none", stopwords="none", tokeniser="english"),
-        InformationRetriever(createPath("ir5"), stemmer="none", stopwords="terrier", tokeniser="whitespace"),
-        InformationRetriever(createPath("ir6"), stemmer="porter", stopwords="none", tokeniser="whitespace"),
-        InformationRetriever(createPath("ir7"), stemmer="none", stopwords="none", tokeniser="whitespace")
+        InformationRetriever(name="control", stemmer="porter", stopwords="terrier", tokeniser="english", dataset="irds:vaswani"),
+        InformationRetriever(name="ir1", stemmer="none", stopwords="terrier", tokeniser="english", dataset="irds:vaswani"),
+        InformationRetriever(name="ir2", stemmer="porter", stopwords="none", tokeniser="english", dataset="irds:vaswani"),
+        InformationRetriever(name="ir3", stemmer="porter", stopwords="terrier", tokeniser="whitespace", dataset="irds:vaswani"),
+        InformationRetriever(name="ir4", stemmer="none", stopwords="none", tokeniser="english", dataset="irds:vaswani"),
+        InformationRetriever(name="ir5", stemmer="none", stopwords="terrier", tokeniser="whitespace", dataset="irds:vaswani"),
+        InformationRetriever(name="ir6", stemmer="porter", stopwords="none", tokeniser="whitespace", dataset="irds:vaswani"),
+        InformationRetriever(name="ir7", stemmer="none", stopwords="none", tokeniser="whitespace", dataset="irds:vaswani")
     ]
 
     threads = []
