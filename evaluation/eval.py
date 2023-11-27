@@ -37,15 +37,14 @@ class InformationRetriever:
 class Evaluator:
     def __init__(self, ir_systems):
         self.ir_systems = ir_systems
-        self.dataset = None
-        self.checkSameDatasetAndAssign()
+        self.dataset = self.checkSameDatasetAndAssign()
 
     def checkSameDatasetAndAssign(self):
         dataset = self.ir_systems[0].dataset
         for i in range(len(self.ir_systems)):
             if (dataset != self.ir_systems[i].dataset):
                 return False
-        self.dataset = dataset
+        return pt.get_dataset(dataset)
 
     def compareSystems(self, wmodel):
         pipelines = []
@@ -62,10 +61,33 @@ class Evaluator:
         )
 
         return results
+    
+    def runExperiment(self, wmodel):
+        threads = []
+
+        for ir_system in self.ir_systems:
+            thread = threading.Thread(target=ir_system.buildIndex)
+            threads.append(thread)
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+
+        results = self.compareSystems(wmodel)
+        return results
+    
+
+class EnvironmentHandler:
+    @staticmethod
+    def SetJavaHome(dir):
+        if (os.path.exists(dir)):
+            os.environ["JAVA_HOME"] = dir
+        else:
+            print("Directory not found")
 
 
 if __name__ == "__main__":
-    os.environ["JAVA_HOME"] = "C:\Program Files\Java\jdk-21"
+    EnvironmentHandler.SetJavaHome(input("Enter Java directory: "))
 
     if not pt.started():
         pt.init()
@@ -82,15 +104,6 @@ if __name__ == "__main__":
         InformationRetriever(name="ir7", stemmer="none", stopwords="none", tokeniser="whitespace", dataset="irds:vaswani")
     ]
 
-    threads = []
-    for ir_system in ir_systems:
-        thread = threading.Thread(target=ir_system.buildIndex)
-        threads.append(thread)
-        thread.start()
-
-    for thread in threads:
-        thread.join()
-
     ev = Evaluator(ir_systems)
-    results = ev.compareSystems(["BM25", "TF_IDF", "Tf"])
+    results = ev.runExperiment(wmodel=["BM25", "TF_IDF", "Tf"])
     print(results)
