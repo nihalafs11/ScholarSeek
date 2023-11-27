@@ -1,6 +1,5 @@
 import pyterrier as pt
 import os
-import threading
 
 
 class InformationRetriever:
@@ -15,7 +14,7 @@ class InformationRetriever:
         self.index_dir = self.createPath()
 
     def createPath(self):
-        base_path = os.getcwd() + "./evaluation/indices/"
+        base_path = os.getcwd() + "/evaluation/indices/"
         return base_path + self.name
 
     def buildIndex(self):
@@ -73,15 +72,8 @@ class Evaluator:
         return results
     
     def runExperiment(self, wmodel):
-        threads = []
-
         for ir_system in self.ir_systems:
-            thread = threading.Thread(target=ir_system.buildIndex)
-            threads.append(thread)
-            thread.start()
-
-        for thread in threads:
-            thread.join()
+            ir_system.buildIndex()
 
         results = self.compareSystems(wmodel)
         return results
