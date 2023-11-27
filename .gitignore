@@ -53,3 +53,5 @@ DEBUG
 # Do not track big files
 index/
 arxiv-metadata-oai-snapshot.json
+
+evaluation/indices
