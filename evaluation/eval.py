@@ -61,9 +61,15 @@ class Evaluator:
                           "recall_5",
                           "recall_10",
                           "recall_15",
+                          "recall_20",
+                          "recall_50",
+                          "recall_100",
                           "P_5",
                           "P_10",
                           "P_15",
+                          "P_20",
+                          "P_50",
+                          "P_100",
                           "map",
                           "recip_rank",
                           "ndcg"]
@@ -82,6 +88,7 @@ class Evaluator:
 class EnvironmentHandler:
     @staticmethod
     def SetJavaHome(dir):
+        # /Users/edrickt/Documents/pyterrier-test/mac/jdk-21.0.1.jdk
         if (os.path.exists(dir)):
             os.environ["JAVA_HOME"] = dir
         elif (dir == "1"):
@@ -89,7 +96,7 @@ class EnvironmentHandler:
 
 
 if __name__ == "__main__":
-    EnvironmentHandler.SetJavaHome(input("Enter Java directory or leave empty for MacOS\n1: C:\Program Files\Java\jdk-21\nInput: "))
+    # EnvironmentHandler.SetJavaHome(input("Enter Java directory or leave empty for MacOS\n1: C:\Program Files\Java\jdk-21\nInput: "))
 
     if not pt.started():
         pt.init()
@@ -117,6 +124,9 @@ if __name__ == "__main__":
     tf_result = ev.runExperiment(wmodel=["Tf"])
     tf_result.insert(0, "detail", ["control", "stm=n/a", "stp=n/a", "tkn=whtspc", "stm=n/a, stp=n/a", "stm=n/a, tkn=whtspc", "stp=n/a, tkn=whtspc", "stm=n/a, stp=n/a, tkn=whtspc"])
 
-    print(bm25_result)
-    print(tfidf_result)
-    print(tf_result)
+    if (not os.path.exists(os.getcwd() + "/evaluation/results")):
+        os.mkdir(os.getcwd() + "/evaluation/results", exist_ok=True)
+        
+    bm25_result.to_csv(os.getcwd() + "/evaluation/results/bm25.csv", sep="\t", index=False)
+    tfidf_result.to_csv(os.getcwd() + "/evaluation/results/tfidf.csv", sep="\t", index=False)
+    tf_result.to_csv(os.getcwd() + "/evaluation/results/tf.csv", sep="\t", index=False)
