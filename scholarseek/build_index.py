@@ -163,6 +163,7 @@ arxiv_category_taxonomy_map = {
     "stat.TH": "Statistics Theory",
 }
 
+
 def arxiv_pdf_iter(arxiv_metadata_path):
     with open(arxiv_metadata_path, "r") as arxiv_metadata:
         for json_obj in arxiv_metadata:
@@ -180,14 +181,15 @@ def arxiv_pdf_iter(arxiv_metadata_path):
                 " " +
                 research_paper_metadata["abstract"]
             )
-
+            
             yield {
                 "docno": research_paper_metadata["id"],
                 "title": research_paper_metadata.get("title", ""),
                 "authors": research_paper_metadata.get("authors", ""),
-                "text": research_paper_index_text
+                "categories": research_paper_metadata.get("categories", ""),
+                "text": research_paper_index_text,
             }
-
+    
 
 
 def build_index_from_pdf_iter(index_path, arxiv_metadata_path):
@@ -195,7 +197,8 @@ def build_index_from_pdf_iter(index_path, arxiv_metadata_path):
         'docno': 20, 
         'title': 256, 
         'authors': 256,
-        'text': 1024  # Adjust the size as needed
+        'categories': 256,  # Add a new field for categories
+        'text': 1024
     })
     pdf_iter = arxiv_pdf_iter(arxiv_metadata_path)
     indexref = iter_indexer.index(pdf_iter)
