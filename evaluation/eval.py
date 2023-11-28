@@ -96,7 +96,7 @@ class EnvironmentHandler:
 
 
 if __name__ == "__main__":
-    # EnvironmentHandler.SetJavaHome(input("Enter Java directory or leave empty for MacOS\n1: C:\Program Files\Java\jdk-21\nInput: "))
+    EnvironmentHandler.SetJavaHome(input("Enter Java directory or leave empty for MacOS\n1: C:\Program Files\Java\jdk-21\nInput: "))
 
     if not pt.started():
         pt.init()
