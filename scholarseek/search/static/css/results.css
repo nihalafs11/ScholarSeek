@@ -62,21 +62,24 @@ canvas {
     display: flex;
     align-items: center;
     gap: 10px;
-    width: 100%; /* Adjust this if necessary */
+    width: 150%; /* Adjust this if necessary */
 }
 
 .search-container input[type=text] {
     flex-grow: 1; /* Allows the input to grow and take available space */
+    min-width: 300px;
     padding: 10px;
+    padding-left: 40px; /* Increase left padding to make space for the magnifying glass */
     border: 1px solid #ccc;
     border-radius: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg');
-    background-position: 15px center; /* Adjust the position of the magnifying glass icon */
+    background-position: 15px center; /* Adjust if needed to align the icon properly */
     background-repeat: no-repeat;
     background-size: 20px;
     margin-right: 10px; /* Ensure some space between the text box and button */
 }
+
 
 #searchButton {
     padding: 10px 20px;
@@ -115,4 +118,58 @@ canvas {
     margin: 5px 0;
 }
 
-/* Additional styles as needed */
+.rank-number {
+    font-weight: bold;
+    color: #ffffff; /* Choose a color that suits your design */
+    margin-right: 10px; /* Adjust spacing as needed */
+    display: inline-block; /* Keeps the number on the same line as the title */
+}
+
+@media (max-width: 768px) {
+    #text-logo {
+        font-size: 45px; /* Adjust as needed for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-area {
+        width: 100%;
+        margin-top: 20px; /* Add some space between logo and search area */
+    }
+
+    .search-container {
+        width: 40%; /* Make the search container take full width */
+    }
+}
+
+@media (max-width: 1088px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-area {
+        width: 100%;
+        margin-top: 20px; /* Add some space between logo and search area */
+    }
+
+    .search-container {
+        width: 40%;
+        align-items: center; /* Make the search container take full width */
+    }
+}
+
+a {
+    color: white; /* Set the color of the links to white */
+    text-decoration: none; /* Removes underline from links */
+    font-weight: bold; /* Makes the text bold */
+}
+
+a:hover {
+    text-decoration: underline; /* Optional: Underlines link on hover for better user interaction */
+}

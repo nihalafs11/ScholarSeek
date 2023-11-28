@@ -1,3 +1,13 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const canvasBody = document.getElementById("canvas"),
+    drawArea = canvasBody.getContext("2d");
+    let delay = 200, tid,
+    rgb = opts.lineColor.match(/\d+/g);
+    
+    resizeReset();
+    setup();
+});
+
 let resizeReset = function() {
 	w = canvasBody.width = window.innerWidth;
 	h = canvasBody.height = window.innerHeight;

@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
-    <script src="{% static 'js/fireflies.js' %}"></script>
 </head>
 <body>
     <canvas id="canvas"></canvas>
@@ -35,18 +34,19 @@
                 <ul>
                     {% for paper in results %}
                         <li>
+                            <div class="rank-number">{{ forloop.counter }} |</div>
                             <div>
                                 <strong>Title:</strong> 
-                                <a href="https://arxiv.org/pdf/{{ paper.docno }}.pdf">{{ paper.title }}</a>
+                                <a href="https://arxiv.org/pdf/{{ paper.docno }}.pdf" target="_blank">{{ paper.title }}</a>
+                            </div>
+                            <div>
+                                <strong>Categories:</strong> {{ paper.categories }}
                             </div>
                             <div>
                                 <strong>Authors:</strong> {{ paper.authors }}
                             </div>
                             <div>
                                 <strong>Abstract:</strong> {{ paper.text }}
-                            </div>
-                            <div>
-                                <strong>Score:</strong> {{ paper.score }}
                             </div>
                         </li>
                     {% endfor %}
@@ -56,5 +56,6 @@
             <p>No results found.</p>
         {% endif %}
     {% endblock %}
+    <script src="{% static 'js/fireflies.js' %}"></script>
 </body>
 </html>
